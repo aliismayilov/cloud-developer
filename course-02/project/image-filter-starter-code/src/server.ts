@@ -21,7 +21,7 @@ import { readFileSync } from 'fs';
   // RETURNS
   //   the filtered image file [!!TIP res.sendFile(filteredpath); might be useful]
   app.get("/filteredimage", async (req, res) => {
-    const { image_url } = req.query;
+    const { image_url } = req.query as { image_url: string };
 
     console.log(`captured ${image_url}`);
 
@@ -29,7 +29,7 @@ import { readFileSync } from 'fs';
       return res.status(400).send("please provide an image_url");
     }
 
-    let filename;
+    let filename: string;
     
     try {
       filename = await filterImageFromURL(image_url);
