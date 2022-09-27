@@ -1,7 +1,6 @@
 import express from 'express';
 import bodyParser from 'body-parser';
 import {filterImageFromURL, deleteLocalFiles} from './util/util';
-import { readFileSync } from 'fs';
 
 (async () => {
 
@@ -38,9 +37,9 @@ import { readFileSync } from 'fs';
       return res.status(400).send('could not process image');
     }
 
-    res.send(readFileSync(filename));
-
-    await deleteLocalFiles([filename]);
+    res.sendFile(filename, {}, async (err) => {
+      await deleteLocalFiles([filename]);
+    });
   })
   
   // Root Endpoint
